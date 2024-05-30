@@ -1,0 +1,34 @@
+<div>
+  <h2>Usuarios</h2>
+  <ul>
+    <li *ngFor="let usuario of users" class="usuario-item">
+      <span>{{ usuario.nombre }} - {{ usuario.telefono }}</span>
+    </li>
+  </ul>
+
+  <h3>Agregar Usuario</h3>
+  <form (ngSubmit)="agregarUsuario()">
+    <input [(ngModel)]="newUser.nombre" name="nombre" placeholder="Nombre" required>
+    <input [(ngModel)]="newUser.telefono" name="telefono" placeholder="Teléfono" required>
+    <button type="submit">Agregar Usuario</button>
+  </form>
+</div>  
+
+<div class="avatar-container">
+  <div class="image-container" 
+    [ngStyle]="{backgroundImage: 'url(' + file + ')'}">
+  </div> 
+  <label for="avatar-input-file">
+      <div class="icon-wrapper">
+        <input type="file" id="avatar-input-file" accept="image/*" (change)="onFileChange($event)" />
+          <i class="icon" fontIcon="edit"></i>
+      </div>
+  </label>
+</div>
+
+<button (click)="subirImagen()">Subir Imagen</button>
+
+
+ 
+
+
