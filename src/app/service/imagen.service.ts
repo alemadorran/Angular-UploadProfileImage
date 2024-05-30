@@ -20,5 +20,14 @@ export class ImagenService {
   getAvatar(usuarioId: number): Observable<Blob> {
     return this.http.get(`${this.apiUrl}/${usuarioId}`, { responseType: 'blob' });
   }
+
+  eliminarAvatar(usuarioId: number): void {
+
+    console.log("Entramos a eliminar la imagen")
+    console.log("El num de usuario: " + usuarioId);
+
+    this.http.delete(`${this.apiUrl}/${usuarioId}`);
+      
+  }
   
 }

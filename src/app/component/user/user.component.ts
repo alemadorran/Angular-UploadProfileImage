@@ -17,6 +17,8 @@ export class UserComponent implements OnInit {
   selectedFile: File | null = null;
   selectedUsuarioId: number | undefined;
 
+  numeroId: number = 0;
+
   file: string = '';
 
   avatars: { [key: number]: string } = {};
@@ -86,7 +88,12 @@ export class UserComponent implements OnInit {
       console.log("ERROR al cargar la imagen");
     });
   }
-  
 
+  eliminarAvatar(usuarioId: number): void {
+
+    this.imagenService.eliminarAvatar(usuarioId);
+      
+  }
+  
 
 }

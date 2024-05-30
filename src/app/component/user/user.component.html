@@ -28,7 +28,14 @@
 
 <button (click)="subirImagen()">Subir Imagen</button>
 
+<div class="action-container">
+  <!-- Input para ingresar el número -->
+  <input type="number" class="form-control" [(ngModel)]="numeroId" placeholder="Ingresar Número">
 
- 
+  <!-- Botón de eliminar -->
+  <button (click)="eliminarAvatar(numeroId)" class="btn btn-danger">
+    <i class="fa fa-trash">ELIMINAR</i>
+  </button>
+</div>
 
 
