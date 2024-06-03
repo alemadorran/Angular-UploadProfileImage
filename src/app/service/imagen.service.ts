@@ -12,8 +12,11 @@ export class ImagenService {
   constructor(private http: HttpClient) { }
 
   uploadAvatar(usuarioId: number, file: File): Observable<any> {
+    console.log("lo que le llega: " + file.type);
     const formData: FormData = new FormData();
-    formData.append('file', file, file.name);
+    console.log(formData);
+    formData.append('file', file);
+    console.log(formData);
     return this.http.post<any>(`${this.apiUrl}/${usuarioId}`, formData);
   }
 

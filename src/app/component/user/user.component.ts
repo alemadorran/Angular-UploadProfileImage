@@ -23,22 +23,57 @@ export class UserComponent implements OnInit {
 
   avatars: { [key: number]: string } = {};
 
+  imageUrl: string | ArrayBuffer | null = null;
+
   constructor(private userService: UserService, private imagenService: ImagenService) { }
 
 
   ngOnInit(): void {
+
     this.obtenerUsuarios();
+
   }
 
   obtenerUsuarios(): void {
+
     this.userService.getUsuarios().subscribe((data: User[]) => {
       this.users = data;
       this.users.forEach(usuario => {
         if (usuario.id !== undefined) {
-          //this.cargarAvatar(usuario.id);
+          console.log("Entro a cargar los usuarios");
+          
+          this.obtenerImagenUsuario();
+
         }
       });
     });
+
+    
+  }
+
+  obtenerImagenUsuario(){
+
+    console.log("users" + this.users.length);
+    if(this.users.length > 0){
+
+      console.log("Entro a llamar al servicio");
+      this.imagenService.getAvatar(this.users[0].id!).subscribe(blob => {
+        this.createImageFromBlob(blob);
+      });
+
+    }
+  }
+
+  createImageFromBlob(image: Blob): void {
+    console.log("Entro a crear el blob");
+    let reader = new FileReader();
+    reader.addEventListener("load", () => {
+       this.imageUrl = reader.result;
+    }, false);
+
+    if (image) {
+       reader.readAsDataURL(image);
+    }
   }
 
   agregarUsuario(): void {
@@ -59,7 +94,7 @@ export class UserComponent implements OnInit {
 
     if (files.length > 0) {
       const _file = URL.createObjectURL(files[0]);
-      this.file = _file;
+      this.imageUrl = _file;
     }
 
   }
@@ -77,17 +112,7 @@ export class UserComponent implements OnInit {
     }
   }
 
-  cargarAvatar(usuarioId: number): void {
-    this.imagenService.getAvatar(usuarioId).subscribe((blob: Blob) => {
-      const reader = new FileReader();
-      reader.onload = (event: any) => {
-        this.avatars[usuarioId] = event.target.result;
-      };
-      reader.readAsDataURL(blob);
-    }, error => {
-      console.log("ERROR al cargar la imagen");
-    });
-  }
+  
 
   eliminarAvatar(usuarioId: number): void {
 
